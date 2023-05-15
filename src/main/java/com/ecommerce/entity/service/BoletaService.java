@@ -12,6 +12,7 @@ import com.ecommerce.entity.DetalleBoletaPK;
 import com.ecommerce.entity.repository.BoletaRepository;
 import com.ecommerce.entity.repository.CategoriaRepository;
 import com.ecommerce.entity.repository.DetalleBoletaRepository;
+import com.ecommerce.entity.repository.ElectroRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -24,6 +25,8 @@ public class BoletaService {
 	@Autowired
 	private DetalleBoletaRepository repodeta;
 	
+	@Autowired
+	private ElectroRepository ele;
 	
 	@Transactional
 	public void registrarBoleta(Boleta bean) {
@@ -36,6 +39,7 @@ public class BoletaService {
 				pk.setNumeroBoleta(bean.getNumeroBoleta());
 				pk.setCodigoElec(mhb.getElec().getCodigoele());
 				mhb.setPk(pk);
+				ele.actualizarStock(mhb.getCantidad(),mhb.getElec().getCodigoele());
 				repodeta.save(mhb);
 			}
 			

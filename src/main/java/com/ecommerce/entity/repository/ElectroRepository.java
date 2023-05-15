@@ -28,4 +28,10 @@ public interface ElectroRepository extends JpaRepository<Electrodomestico, Integ
 	public List<DetalleBoleta> listadoDetallepro(int est); */
 	@Query ("select de from DetalleBoleta de join de.elec a  where de.boleta.numeroBoleta=?1")
 	public List<DetalleBoleta> listadoDetallepro(int est); 
+	
+	
+	@Transactional
+	@Modifying
+	@Query ("update Electrodomestico e set e.stock= e.stock - ?1 where e.codigoele=?2")
+	public void actualizarStock(int can,int codigo);
 }

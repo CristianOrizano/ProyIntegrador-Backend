@@ -38,7 +38,7 @@ public class ClienteController {
 		return lista;
 	}
 
-	
+	//metodo prueba
 	//metodo para insertar
 	@PostMapping()
 	public Cliente insertar(@RequestBody Cliente admin,Model model) {

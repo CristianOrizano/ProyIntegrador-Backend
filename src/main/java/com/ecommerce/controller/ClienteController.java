@@ -24,7 +24,7 @@ import ch.qos.logback.core.model.Model;
 
 @RestController
 @RequestMapping("/cliente")
-@CrossOrigin(origins = "https://cyberelectronicoliv.netlify.app/")
+@CrossOrigin
 public class ClienteController {
 	
 	@Autowired
@@ -37,6 +37,14 @@ public class ClienteController {
 
 		return lista;
 	}
+	 @CrossOrigin
+	@GetMapping("/{id}")
+	public Cliente buscarCiudad(@PathVariable("id") int cod ) {
+		 Cliente ciu= sercli.BuscarCli(cod);
+
+		return ciu;
+	}
+
 
 	//metodo prueba
 	//metodo para insertar

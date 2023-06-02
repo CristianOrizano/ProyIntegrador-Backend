@@ -22,7 +22,6 @@ import ch.qos.logback.core.model.Model;
 @RestController
 @RequestMapping("/electro")
 @CrossOrigin(origins = "https://cyberelectronicoliv.netlify.app/")
-//@CrossOrigin(origins = "https://cyberelectronicoliv.netlify.app/")
 public class ElectroController {
 	@Autowired
 	private ElectroService serelec;

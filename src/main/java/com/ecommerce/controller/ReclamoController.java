@@ -1,5 +1,7 @@
 package com.ecommerce.controller;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,60 +15,52 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ecommerce.entity.Cliente;
-import com.ecommerce.entity.Electrodomestico;
-import com.ecommerce.entity.service.CategoriaService;
-import com.ecommerce.entity.service.ClienteService;
-import com.ecommerce.entity.service.ElectroService;
+import com.ecommerce.entity.Proveedor;
+import com.ecommerce.entity.Reclamo;
+import com.ecommerce.entity.service.ProveedorService;
+import com.ecommerce.entity.service.ReclamoService;
+import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
 
 import ch.qos.logback.core.model.Model;
 
-
 @RestController
-@RequestMapping("/cliente")
+@RequestMapping("/reclamos")
 @CrossOrigin
-public class ClienteController {
+public class ReclamoController {
 	
 	@Autowired
-	private ClienteService sercli;
+	private ReclamoService serrecla;
 	
 	//metodo para listar 
 	@GetMapping()
-	public List<Cliente> ListarClie(Model model) {
-		List<Cliente> lista= sercli.listadoActivos(1);
+	public List<Reclamo> ListarProv(Model model) {
+		List<Reclamo> lista= serrecla.listadoReclamos();
 
 		return lista;
-	}
-	 @CrossOrigin
-	@GetMapping("/{id}")
-	public Cliente buscarCiudad(@PathVariable("id") int cod ) {
-		 Cliente ciu= sercli.BuscarCli(cod);
-
-		return ciu;
 	}
 
 	
 	//metodo para insertar
+	@CrossOrigin
 	@PostMapping()
-	public Cliente insertar(@RequestBody Cliente admin,Model model) {
+	public Reclamo insertar(@RequestBody Reclamo rec,Model model) {
 		
-		return sercli.guardar(admin);
+		Reclamo re= new Reclamo();
+		
+		re.setCliente(rec.getCliente());
+		re.setDescripcion(rec.getDescripcion());
+		re.setFono(rec.getFono());
+		re.setFecha_emis(new Date());
+		return serrecla.guardar(re);
 	}
 	
-	
-	//metodo para Actualizar
-	@PutMapping()
-	public Cliente actualizar(@RequestBody Cliente elec) {
-		
-		return sercli.guardar(elec);
-	}
 	
 	//metodo para Eliminar
 	@DeleteMapping("/{id}")
 	public void Eliminar(@PathVariable("id") int cod) {
-		sercli.eliminar(0,cod);
+		serrecla.eliminar(cod);
 
 	}
-	
-	
+
+
 }

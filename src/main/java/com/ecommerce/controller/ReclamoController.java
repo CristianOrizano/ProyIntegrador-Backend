@@ -31,7 +31,7 @@ public class ReclamoController {
 	@Autowired
 	private ReclamoService serrecla;
 	
-	//metodo para listar 
+	//metodo para listar para reclamos
 	@GetMapping()
 	public List<Reclamo> ListarProv(Model model) {
 		List<Reclamo> lista= serrecla.listadoReclamos();

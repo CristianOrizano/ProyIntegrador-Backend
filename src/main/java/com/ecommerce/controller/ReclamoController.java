@@ -80,6 +80,7 @@ public class ReclamoController {
 			}
 			else {
 				Reclamo rclm = serrecla.guardar(rec);
+				rclm.setFecha_emis(new Date());
 				salida.put("mensaje", "exito al registrar");
 			}
 		} catch (Exception e) {

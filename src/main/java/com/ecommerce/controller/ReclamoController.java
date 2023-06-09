@@ -47,19 +47,11 @@ public class ReclamoController {
 	}
 
 	@GetMapping("/{codigo}")
-	public ResponseEntity<Map<String, Object>> Buscarreclamo(@PathVariable("codigo") int cod) {
-		Map<String, Object> salida = new HashMap<>();
-		Reclamo rec= serrecla.buscaridclientereclamo(cod);
-
-		if (rec == null) {
-			salida.put("mensaje", "el codigo de cliente no existe");
-
-		} else {
-			salida.put("mensaje", rec);
-		}
+	public Reclamo Buscarreclamo(@PathVariable("codigo") int cod) {
 		
-		System.out.println("mensaje ====> "+salida);
-		return ResponseEntity.ok(salida);
+		Reclamo rec= serrecla.buscaridclientereclamo(cod);
+	
+		return rec;
 	}
 	
 	//metodo para insertar

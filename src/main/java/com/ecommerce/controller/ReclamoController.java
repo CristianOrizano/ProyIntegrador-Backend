@@ -79,8 +79,8 @@ public class ReclamoController {
 				salida.put("mensaje", "el cliente ya tiene un reclamo registrado");
 			}
 			else {
+				rec.setFecha_emis(new Date());
 				Reclamo rclm = serrecla.guardar(rec);
-				rclm.setFecha_emis(new Date());
 				salida.put("mensaje", "exito al registrar");
 			}
 		} catch (Exception e) {

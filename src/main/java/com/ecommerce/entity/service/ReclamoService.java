@@ -35,6 +35,11 @@ public class ReclamoService {
 	public List<Reclamo> listadoReclamos(){
 		return repo.findAll();
 	}
+	public  List<Reclamo> buscarporcodigore(int cod){
+		return repo.findByCodigo(cod);
+    }
 	
-	
+	public Reclamo buscaridclientereclamo(int cod){
+			return repo.findByClienteCodigo(cod);
+	}
 }

@@ -2,9 +2,12 @@ package com.ecommerce.controller;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ecommerce.entity.Cliente;
 import com.ecommerce.entity.Proveedor;
 import com.ecommerce.entity.Reclamo;
+import com.ecommerce.entity.service.ClienteService;
 import com.ecommerce.entity.service.ProveedorService;
 import com.ecommerce.entity.service.ReclamoService;
 import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
@@ -30,28 +35,58 @@ public class ReclamoController {
 	
 	@Autowired
 	private ReclamoService serrecla;
+	@Autowired
+	private ClienteService serclie;
 	
 	//metodo para listar para reclamos
 	@GetMapping()
-	public List<Reclamo> ListarProv(Model model) {
+	public List<Reclamo> ListarRecla(Model model) {
 		List<Reclamo> lista= serrecla.listadoReclamos();
 
 		return lista;
 	}
 
+	@GetMapping("/{codigo}")
+	public ResponseEntity<Map<String, Object>> Buscarreclamo(@PathVariable("codigo") int cod) {
+		Map<String, Object> salida = new HashMap<>();
+		Reclamo rec= serrecla.buscaridclientereclamo(cod);
+
+		if (rec == null) {
+			salida.put("mensaje", "el codigo de cliente no existe");
+
+		} else {
+			salida.put("mensaje", rec);
+		}
+		
+		System.out.println("mensaje ====> "+salida);
+		return ResponseEntity.ok(salida);
+	}
 	
 	//metodo para insertar
 	@CrossOrigin
 	@PostMapping()
-	public Reclamo insertar(@RequestBody Reclamo rec,Model model) {
+	public ResponseEntity<Map<String, Object>> insertar(@RequestBody Reclamo rec,Model model) {
 		
-		Reclamo re= new Reclamo();
-		
-		re.setCliente(rec.getCliente());
-		re.setDescripcion(rec.getDescripcion());
-		re.setFono(rec.getFono());
-		re.setFecha_emis(new Date());
-		return serrecla.guardar(re);
+		Map<String, Object> salida = new HashMap<>();
+		try {
+			//Reclamo rec = serrecla.guardar(rec);
+			Cliente cli = serclie.BuscarCli(rec.getCliente().getCodigo());
+			Reclamo re= serrecla.buscaridclientereclamo(rec.getCliente().getCodigo());
+			if (cli == null) {		
+					salida.put("mensaje", "el codigo de cliente no existe");
+				
+			}else if(re != null) {
+				salida.put("mensaje", "el cliente ya tiene un reclamo registrado");
+			}
+			else {
+				Reclamo rclm = serrecla.guardar(rec);
+				salida.put("mensaje", "exito al registrar");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			salida.put("mensaje", "error al registrar");
+		}
+		return ResponseEntity.ok(salida);
 	}
 	
 	

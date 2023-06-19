@@ -35,7 +35,7 @@ class EcommerceFinalApplicationTests {
 	@Autowired
 	private ClienteService serclie;
 	
-	private final String url = "http://localhost:8091/reclamos";
+	private final String url = "https://decorous-control-production.up.railway.app/reclamos";
 	
 	@Test
 	void ElcodigoclienteIncorrecto() throws JsonMappingException, JsonProcessingException {
@@ -46,9 +46,7 @@ class EcommerceFinalApplicationTests {
 		re.setCliente(cli);
 		re.setFono(123456789);
 		re.setDescripcion("en mal estado neverita2..");
-		
 		HttpEntity<Reclamo> request = new HttpEntity<Reclamo>(re);
-
 		  String ruta = url;
 	      RestTemplate res = new RestTemplate();
 	      String respuesta = res.postForObject(ruta, request, String.class);
@@ -66,7 +64,7 @@ class EcommerceFinalApplicationTests {
 		
 		Reclamo re= new Reclamo();
 		Cliente cli= new Cliente();
-		cli.setCodigo(1004);
+		cli.setCodigo(1003);
 		re.setCliente(cli);
 		re.setFono(123456789);
 		re.setDescripcion("en mal estado neverita2..");
@@ -85,13 +83,13 @@ class EcommerceFinalApplicationTests {
 	      assertEquals("exito al registrar", mensaje);
 	}
 	
-	//codigo de cliente se repite
+	//codigo de cliente se repite, ya tiene reclamo
 	@Test
 	void CodigoSeRepite() throws JsonMappingException, JsonProcessingException {
 		
 		Reclamo re= new Reclamo();
 		Cliente cli= new Cliente();
-		cli.setCodigo(1002);
+		cli.setCodigo(1004);
 		re.setCliente(cli);
 		re.setFono(123456789);
 		re.setDescripcion("en mal estado neverita2..");

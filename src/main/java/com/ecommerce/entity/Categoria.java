@@ -19,7 +19,6 @@ import jakarta.persistence.Table;
 @Table(name = "tb_Categoria")
 public class Categoria {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="ide_cat")
 	private int codigocate;
 	

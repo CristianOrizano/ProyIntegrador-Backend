@@ -28,6 +28,12 @@ public class CategoriaService {
 		return repo.findAll();
 	}
 	
+	//metodo eliminar por estado
+		public void eliminar(int esta) {
+			
+		   repo.deleteById(esta); 
+			
+		} 
 
 
 }

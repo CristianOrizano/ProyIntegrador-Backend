@@ -17,7 +17,7 @@ import ch.qos.logback.core.model.Model;
 
 @RestController
 @RequestMapping("/categoria")
-@CrossOrigin(origins = "https://cyberelectronicoliv.netlify.app/")
+@CrossOrigin()
 public class CategoriaController {
 	
 	
